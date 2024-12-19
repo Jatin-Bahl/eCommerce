@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Commerce</title>
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">
+          <img src="images/logo.JPG" alt="Logo">
+        </a>
+        <a href="#" data-category="Home">Home</a>
+        <a href="#" data-category="men's clothing">Men's Clothing</a>
+        <a href="#" data-category="women's clothing">Women's Clothing</a>
+        <a href="#" data-category="electronics">Electronics</a>
+        <a href="#" data-category="jewelery">Jewellery</a>
+      </div>
+
+    <main>
+        <div id="productDetail" class="product-detail">
+            <!-- Product details will be dynamically loaded here -->
+        </div>
+    </main>
+
+
+
+    <script>
+        async function fetchProductDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const productId = params.get('id');
+
+            if (!productId) {
+                document.getElementById('productDetail').innerHTML = '<p style="color: #ef4444;">Invalid product ID.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
+                if (!response.ok) throw new Error('Failed to fetch product details');
+                const product = await response.json();
+
+                const starRating = Math.round(product.rating.rate);
+                const stars = '★'.repeat(starRating) + '☆'.repeat(5 - starRating);
+
+                document.getElementById('productDetail').innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.title}">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <p class="product-category">Category: ${product.category}</p>
+                            <h1 class="product-title">${product.title}</h1>
+                            <div class="product-rating">
+                                <div class="stars">${stars}</div>
+                                <span>(${product.rating.count})</span>
+                            </div>
+                        </div>
+                        <p class="product-price">$${product.price.toFixed(2)}</p>
+                        <p class="product-description">${product.description}</p>
+                        <div>
+                            <label for="quantity">Quantity</label>
+                            <div class="quantity-selector">
+                                <button onclick="updateQuantity(-1)">-</button>
+                                <input type="number" id="quantity" value="1" min="1">
+                                <button onclick="updateQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="add-to-cart">ADD TO CART</button>
+                            <button class="action-icon">♥</button>
+                            <button class="action-icon">↗</button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error(error.message);
+                document.getElementById('productDetail').innerHTML = '<p style="color: #ef4444;">Error loading product details. Please try again later.</p>';
+            }
+        }
+
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById('quantity');
+            let newQuantity = parseInt(quantityInput.value) + change;
+            if (newQuantity < 1) newQuantity = 1;
+            quantityInput.value = newQuantity;
+        }
+
+        fetchProductDetails();
+    </script>
+    <script>
+  document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', function(event) {
+    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.querySelector('.menu-toggle');
+    if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+      navLinks.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
+

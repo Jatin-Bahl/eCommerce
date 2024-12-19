@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-Commerce</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      .navbar, .footer, .load-more button {
+        background-color: #1363df;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#" class="logo">
+        <img src="images/logo.JPG" alt="Logo">
+      </a>
+      <button id="menuToggle" class="menu-toggle">☰</button>
+      <div class="nav-links">
+        <a href="#" data-category="Home">Home</a>
+        <a href="#" data-category="men's clothing">Men's Clothing</a>
+        <a href="#" data-category="women's clothing">Women's Clothing</a>
+        <a href="#" data-category="electronics">Electronics</a>
+        <a href="#" data-category="jewelery">Jewellery</a>
+      </div>
+    </div>
+
+    <div class="bannerWrapper">
+      <img src="images/banner.png" alt="E-commerce Banner" class="banner">
+    </div>
+    <div class="layout-container">
+      <div class="sidebar">
+        <div class="breadcrumb">Clothing / Women / Outerwear</div>
+        <div class="functionalityContainer">
+          <h2>Filter</h2>
+          <hr>
+          <div class="filters">
+            <select id="categoryFilter">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <div class="price-range">
+            <label for="Range">Price:</label>
+            <div class="price-inputs">
+              <input type="range" id="minPriceRange" min="0" max="200" value="0" step="1">
+              <span id="minPrice">0</span>
+
+              <input type="range" id="maxPriceRange" min="0" max="200" value="200" step="1">
+              <span id="maxPrice">200</span>
+            </div>
+          </div>
+          <div class="search-bar">
+            <label for="search">Search by name:</label>
+            <input type="text" id="search" placeholder="Search products..." />
+          </div>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="headContainer">
+          <select id="sortFilter">
+            <option value="">Sort By</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
+        <div class="product-list" id="productList">
+          <!-- Products will be dynamically loaded here -->
+        </div>
+      </div>
+    </div>
+    <div class="load-more">
+      <button id="loadMore">Load More</button>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 E-commerce Website. All rights reserved to Jatin Bahl.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+    
+    <script src="script.js"></script>
+  </body>
+</html>
+
