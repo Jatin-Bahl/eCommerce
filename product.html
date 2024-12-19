@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>e-Commerce</title>
+    <title>e-Commerce Product</title>
     <link rel="stylesheet" href="product.css">
 </head>
 <body>
     <div class="navbar">
-        <a href="#" class="logo">
-          <img src="images/logo.JPG" alt="Logo">
+        <a href="index.html" class="logo">
+            <img src="images/logo.JPG" alt="Logo">
         </a>
-        <a href="#" data-category="Home">Home</a>
-        <a href="#" data-category="men's clothing">Men's Clothing</a>
-        <a href="#" data-category="women's clothing">Women's Clothing</a>
-        <a href="#" data-category="electronics">Electronics</a>
-        <a href="#" data-category="jewelery">Jewellery</a>
-      </div>
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu">☰</button>
+        <div class="nav-links">
+            <a href="index.html" data-category="Home">Home</a>
+            <a href="#" data-category="men's clothing">Men's Clothing</a>
+            <a href="#" data-category="women's clothing">Women's Clothing</a>
+            <a href="#" data-category="electronics">Electronics</a>
+            <a href="#" data-category="jewelery">Jewellery</a>
+        </div>
+    </div>
 
     <main>
         <div id="productDetail" class="product-detail">
@@ -24,15 +27,13 @@
         </div>
     </main>
 
-
-
     <script>
         async function fetchProductDetails() {
             const params = new URLSearchParams(window.location.search);
             const productId = params.get('id');
 
             if (!productId) {
-                document.getElementById('productDetail').innerHTML = '<p style="color: #ef4444;">Invalid product ID.</p>';
+                document.getElementById('productDetail').innerHTML = '<p class="error-message">Invalid product ID.</p>';
                 return;
             }
 
@@ -62,21 +63,21 @@
                         <div>
                             <label for="quantity">Quantity</label>
                             <div class="quantity-selector">
-                                <button onclick="updateQuantity(-1)">-</button>
-                                <input type="number" id="quantity" value="1" min="1">
-                                <button onclick="updateQuantity(1)">+</button>
+                                <button onclick="updateQuantity(-1)" aria-label="Decrease quantity">-</button>
+                                <input type="number" id="quantity" value="1" min="1" aria-label="Product quantity">
+                                <button onclick="updateQuantity(1)" aria-label="Increase quantity">+</button>
                             </div>
                         </div>
                         <div class="action-buttons">
                             <button class="add-to-cart">ADD TO CART</button>
-                            <button class="action-icon">♥</button>
-                            <button class="action-icon">↗</button>
+                            <button class="action-icon" aria-label="Add to favorites">♥</button>
+                            <button class="action-icon" aria-label="Share">↗</button>
                         </div>
                     </div>
                 `;
             } catch (error) {
                 console.error(error.message);
-                document.getElementById('productDetail').innerHTML = '<p style="color: #ef4444;">Error loading product details. Please try again later.</p>';
+                document.getElementById('productDetail').innerHTML = '<p class="error-message">Error loading product details. Please try again later.</p>';
             }
         }
 
@@ -88,21 +89,21 @@
         }
 
         fetchProductDetails();
-    </script>
-    <script>
-  document.querySelector('.menu-toggle').addEventListener('click', function() {
-    document.querySelector('.nav-links').classList.toggle('active');
-  });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', function(event) {
-    const navLinks = document.querySelector('.nav-links');
-    const menuToggle = document.querySelector('.menu-toggle');
-    if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
-      navLinks.classList.remove('active');
-    }
-  });
-</script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener("click", (e) => {
+            if (!navLinks.contains(e.target) && e.target !== menuToggle) {
+                navLinks.classList.remove("active");
+            }
+        });
+    </script>
 </body>
 </html>
-
